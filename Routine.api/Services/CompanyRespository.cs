@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Routine.api.Data;
+using Routine.api.DtoParameters;
 using Routine.api.Entities;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Routine.api.Services
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
-            return await _context.Companies.AnyAsync(x=>x.Id==companyId);
+            return await _context.Companies.AnyAsync(x => x.Id == companyId);
         }
 
         public void DeleteCompany(Company company)
@@ -74,9 +75,28 @@ namespace Routine.api.Services
             _context.Employees.Remove(employee);
         }
 
-        public async Task<IEnumerable<Company>> GetCompaniesAsync()
+        public async Task<IEnumerable<Company>> GetCompaniesAsync(CompanyDtoParameters parameters)
         {
-            return await _context.Companies.ToListAsync();
+            if (parameters == null)
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }
+            if (string.IsNullOrWhiteSpace(parameters.CompanyName) && string.IsNullOrWhiteSpace(parameters.SearchTerm))
+            {
+                return await _context.Companies.ToListAsync();
+            }
+
+            var queryExpression = _context.Companies as IQueryable<Company>;
+            if (!string.IsNullOrWhiteSpace(parameters.CompanyName))
+            {
+                queryExpression=queryExpression.Where(x => x.Name.Contains(parameters.CompanyName.Trim()));
+            }
+            if (!string.IsNullOrWhiteSpace(parameters.SearchTerm))
+            {
+                queryExpression=queryExpression.Where(x => x.Name.Contains(parameters.SearchTerm.Trim()) ||
+                                           x.Introduction.Contains(parameters.SearchTerm.Trim()));
+            }
+            return await queryExpression.ToListAsync();
         }
 
         public async Task<IEnumerable<Company>> GetCompaniesAsync(IEnumerable<Guid> companyIds)
@@ -117,16 +137,25 @@ namespace Routine.api.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId)
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, string genderDisplay)
         {
             if (companyId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
 
-            return await _context.Employees.Where(x => x.CompanyId == companyId)
+            if (string.IsNullOrWhiteSpace(genderDisplay))
+            {
+                return await _context.Employees.Where(x => x.CompanyId == companyId)
+               .ToListAsync();
+            }
+
+            var genderTrim = genderDisplay.Trim();
+            var gender = Enum.Parse<Gender>(genderTrim);
+            return await _context.Employees.Where(x => x.CompanyId == companyId && x.Gender == gender)
                 .ToListAsync();
-              
+
+
         }
 
         public async Task<bool> SaveAsync()
