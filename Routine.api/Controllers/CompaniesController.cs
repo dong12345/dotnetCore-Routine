@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Routine.api.DtoModel;
 using Routine.api.DtoParameters;
+using Routine.api.Entities;
 using Routine.api.Services;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace Routine.api.Controllers
             return Ok(companyDtos);
         }
 
-        [HttpGet("{companyId}")]
+        [HttpGet("{companyId}",Name =nameof(GetCompany))]
         public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId)
         {
             var company = await _companyRespository.GetCompanyAsync(companyId);
@@ -41,6 +42,16 @@ namespace Routine.api.Controllers
             }
             var companyDto = _mapper.Map<CompanyDto>(company);
             return Ok(companyDto);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<CompanyDto>> CreateCompany(CompanyAddDto companyDto)
+        {
+            var company = _mapper.Map<Company>(companyDto);
+            _companyRespository.AddCompany(company);
+            await _companyRespository.SaveAsync();
+            var returnDto = _mapper.Map<CompanyDto>(company);
+            return CreatedAtRoute(nameof(GetCompany), new { companyId = company.Id }, returnDto);
         }
 
     }

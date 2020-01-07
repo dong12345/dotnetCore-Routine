@@ -14,6 +14,8 @@ namespace Routine.api.Profiles
         {
             CreateMap<Company, CompanyDto>()
                 .ForMember(dst => dst.CompanyName, opt => opt.MapFrom(src => src.Name));
+
+            CreateMap<CompanyAddDto, Company>();
         }
     }
 }

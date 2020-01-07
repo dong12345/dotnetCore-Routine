@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Routine.api.DtoModel;
+using Routine.api.Entities;
 using Routine.api.Services;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Routine.api.Controllers
             return Ok(employeesDto);
         }
 
-        [Route("{employeeId}")]
+        [Route("{employeeId}",Name =nameof(GetEmployee))]
         public async Task<ActionResult<EmployeeDto>> GetEmployee(Guid companyId, Guid employeeId)
         {
             if (!await _companyRespository.CompanyExistAsync(companyId))
@@ -52,6 +53,17 @@ namespace Routine.api.Controllers
             }
 
             return Ok(_mapper.Map<EmployeeDto>(employee));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<EmployeeDto>> CreateEmployeeForCompany(Guid companyId,EmployeeAddDto employeeAddDto)
+        {
+            var employee = _mapper.Map<Employee>(employeeAddDto);
+            _companyRespository.AddEmployee(companyId, employee);
+            await _companyRespository.SaveAsync();
+
+            var dtoReturn = _mapper.Map<EmployeeDto>(employee);
+            return CreatedAtRoute(nameof(GetEmployee), new { companyId = companyId, employeeId = employee.Id }, dtoReturn);
         }
 
     }
