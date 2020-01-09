@@ -30,6 +30,16 @@ namespace Routine.api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.AllowAnyOrigin() //允许任何来源的主机访问
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
+
             services.AddControllers(setup=> {
                 setup.ReturnHttpNotAcceptable = true;
                 //setup.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());//3.0之前写法
@@ -39,6 +49,7 @@ namespace Routine.api
             services.AddDbContext<RoutineDbContext>(option => {
                 option.UseSqlServer("Server=.;Database=routine.db;Trusted_Connection=True;");
             });
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,9 +69,9 @@ namespace Routine.api
                     });
                 });
             }
-
+           
             app.UseRouting();
-
+            app.UseCors("any");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

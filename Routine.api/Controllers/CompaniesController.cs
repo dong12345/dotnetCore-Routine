@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Routine.api.DtoModel;
 using Routine.api.DtoParameters;
@@ -13,6 +14,7 @@ namespace Routine.api.Controllers
 {
     [ApiController]
     [Route("api/companies")]
+    [EnableCors("any")]
     public class CompaniesController:ControllerBase
     {
         public ICompanyRespository _companyRespository { get; }

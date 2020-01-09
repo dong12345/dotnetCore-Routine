@@ -9,5 +9,7 @@ namespace Routine.api.DtoModel
     {
         public string Name { get; set; }
         public string Introduction { get; set; }
+
+        public ICollection<EmployeeAddDto> Employees { get; set; } = new List<EmployeeAddDto>();
     }
 }
