@@ -9,7 +9,7 @@ namespace Routine.api.Entities
     public class Company
     {
         public Guid Id { get; set;}
-        [Required,MaxLength(100)]
+      
         public string Name { get; set; }
 
         public string Introduction { get; set; }

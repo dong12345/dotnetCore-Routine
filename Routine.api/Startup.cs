@@ -49,7 +49,8 @@ namespace Routine.api
             services.AddDbContext<RoutineDbContext>(option => {
                 option.UseSqlServer("Server=.;Database=routine.db;Trusted_Connection=True;");
             });
-          
+            services.AddSwaggerDocument();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,7 +70,8 @@ namespace Routine.api
                     });
                 });
             }
-           
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
             app.UseRouting();
             app.UseCors("any");
             app.UseAuthorization();

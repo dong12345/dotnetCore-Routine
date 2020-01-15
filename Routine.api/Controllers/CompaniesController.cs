@@ -26,6 +26,11 @@ namespace Routine.api.Controllers
             _mapper = mapper??throw new ArgumentNullException(nameof(mapper));
         }
 
+        /// <summary>
+        /// 根据条件获得公司集合
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CompanyDto>>> GetCompanies([FromQuery] CompanyDtoParameters parameters)
         {
