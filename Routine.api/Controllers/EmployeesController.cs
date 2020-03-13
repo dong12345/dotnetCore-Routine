@@ -23,6 +23,12 @@ namespace Routine.api.Controllers
             this._companyRespository = companyRespository ?? throw new ArgumentNullException(nameof(companyRespository));
         }
 
+        /// <summary>
+        /// 根据公司id获得旗下的员工集合
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="genderDisplay"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployeesForCompany(Guid companyId,[FromQuery]string genderDisplay)
         {
@@ -39,6 +45,12 @@ namespace Routine.api.Controllers
             return Ok(employeesDto);
         }
 
+        /// <summary>
+        /// 根据公司id,员工id获得员工
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
         [Route("{employeeId}",Name =nameof(GetEmployee))]
         public async Task<ActionResult<EmployeeDto>> GetEmployee(Guid companyId, Guid employeeId)
         {
@@ -55,6 +67,12 @@ namespace Routine.api.Controllers
             return Ok(_mapper.Map<EmployeeDto>(employee));
         }
 
+        /// <summary>
+        /// 为公司创建员工
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <param name="employeeAddDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<EmployeeDto>> CreateEmployeeForCompany(Guid companyId,EmployeeAddDto employeeAddDto)
         {

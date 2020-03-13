@@ -24,6 +24,11 @@ namespace Routine.api.Controllers
             this._companyRespository = companyRespository??throw new ArgumentNullException(nameof(companyRespository));
         }
 
+        /// <summary>
+        /// 根据公司id集合获得公司集合
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
         [HttpGet("{ids}",Name =nameof(GetCompanyCollection))]
         public async Task<IActionResult> GetCompanyCollection(
             [FromRoute] 
@@ -43,6 +48,11 @@ namespace Routine.api.Controllers
             return Ok(dtoReturns);
         }
 
+        /// <summary>
+        /// 添加公司集合
+        /// </summary>
+        /// <param name="companycollection"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<ICollection<CompanyDto>>> AddCompanyCollections(ICollection<CompanyAddDto> companycollection)
         {

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Routine.api</name>
+    </assembly>
+    <members>
+        <member name="M:Routine.api.Controllers.CompaniesController.GetCompanies(Routine.api.DtoParameters.CompanyDtoParameters)">
+            <summary>
+            根据条件获得公司集合
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.CompaniesController.GetCompany(System.Guid)">
+            <summary>
+            根据公司Id获得公司
+            </summary>
+            <param name="companyId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.CompaniesController.CreateCompany(Routine.api.DtoModel.CompanyAddDto)">
+            <summary>
+            创建公司信息
+            </summary>
+            <param name="companyDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.CompanyCollectionsController.GetCompanyCollection(System.Collections.Generic.IEnumerable{System.Guid})">
+            <summary>
+            根据公司id集合获得公司集合
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.CompanyCollectionsController.AddCompanyCollections(System.Collections.Generic.ICollection{Routine.api.DtoModel.CompanyAddDto})">
+            <summary>
+            添加公司集合
+            </summary>
+            <param name="companycollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.EmployeesController.GetEmployeesForCompany(System.Guid,System.String)">
+            <summary>
+            根据公司id获得旗下的员工集合
+            </summary>
+            <param name="companyId"></param>
+            <param name="genderDisplay"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.EmployeesController.GetEmployee(System.Guid,System.Guid)">
+            <summary>
+            根据公司id,员工id获得员工
+            </summary>
+            <param name="companyId"></param>
+            <param name="employeeId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Routine.api.Controllers.EmployeesController.CreateEmployeeForCompany(System.Guid,Routine.api.DtoModel.EmployeeAddDto)">
+            <summary>
+            为公司创建员工
+            </summary>
+            <param name="companyId"></param>
+            <param name="employeeAddDto"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Routine.api.DtoParameters.CompanyDtoParameters.CompanyName">
+            <summary>
+            公司名称
+            </summary>
+        </member>
+        <member name="P:Routine.api.DtoParameters.CompanyDtoParameters.SearchTerm">
+            <summary>
+            查询参数
+            </summary>
+        </member>
+    </members>
+</doc>

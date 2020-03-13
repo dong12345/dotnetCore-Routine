@@ -39,6 +39,11 @@ namespace Routine.api.Controllers
             return Ok(companyDtos);
         }
 
+        /// <summary>
+        /// 根据公司Id获得公司
+        /// </summary>
+        /// <param name="companyId"></param>
+        /// <returns></returns>
         [HttpGet("{companyId}",Name =nameof(GetCompany))]
         public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId)
         {
@@ -51,6 +56,11 @@ namespace Routine.api.Controllers
             return Ok(companyDto);
         }
 
+        /// <summary>
+        /// 创建公司信息
+        /// </summary>
+        /// <param name="companyDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<CompanyDto>> CreateCompany(CompanyAddDto companyDto)
         {
