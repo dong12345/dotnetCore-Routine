@@ -4,7 +4,7 @@
     "Routine.api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/companies",
+      "launchUrl": "v1/api/companies",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

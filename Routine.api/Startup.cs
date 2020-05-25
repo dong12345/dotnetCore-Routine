@@ -44,6 +44,8 @@ namespace Routine.api
                 setup.ReturnHttpNotAcceptable = true;
                 //setup.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());//3.0之前写法
             }).AddXmlDataContractSerializerFormatters();
+            // 参数类型是Assembly类型的数组 表示AutoMapper将在这些程序集数组里面遍历寻找所有继承了Profile类的配置文件
+            // 在当前作用域的所有程序集里面扫描AutoMapper的配置文件
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICompanyRespository, CompanyRespository>();
             services.AddDbContext<RoutineDbContext>(option => {

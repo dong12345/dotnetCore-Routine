@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace Routine.api.Controllers
 {
     [ApiController]
-    [Route("api/companies")]
+    [Route("v1/api/companies")]
     [EnableCors("any")]
     public class CompaniesController:ControllerBase
     {
